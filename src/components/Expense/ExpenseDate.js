@@ -1,8 +1,8 @@
 import './ExpenseDate.css';
 
-function ExpenseDate(props){
+const ExpenseDate = props=>{
     const monthNames = ["Jan", "Feb", "Mar", "Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
+    
 return (
     <div className="expense-date">
         <div className="expense-date__month">{monthNames[props.date.getMonth()]}</div><br></br>
