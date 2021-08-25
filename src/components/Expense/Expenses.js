@@ -1,25 +1,38 @@
 import ExpenseItem from "./ExpenseItem";
-import './Expenses.css';
-import Card from '../UI/Card';
+import "./Expenses.css";
+import Card from "../UI/Card";
+import ExpenseFilter from "./ExpenseFilter";
+import React, { useState } from "react";
 
 function Expenses(props) {
-    return (
-        <Card className="expenses">
-            <ExpenseItem date={props.expenses[0].date}
-            amount = {props.expenses[0].amount}
-            title = {props.expenses[0].title} />
-            <ExpenseItem date={props.expenses[1].date} 
-            amount = {props.expenses[1].amount}
-            title = 
-            {props.expenses[1].title} />
-            <ExpenseItem date={props.expenses[2].date} 
-            amount = {props.expenses[2].amount}
-            title = {props.expenses[2].title }/>
-            <ExpenseItem date={props.expenses[3].date}
-            amount = {props.expenses[3].amount}
-            title = {props.expenses[3].title }/>
-        </Card>
-    );
+  const [selectedExpenseFilter, setExpenseFilter] = useState("2020");
+  console.log("Expenses:" + props.expenses);
+
+  const handleFilterChange = (filterValue) => {
+    setExpenseFilter(filterValue);
+    console.log(filterValue);
+  };
+
+  return (
+    <Card className="expenses">
+      <ExpenseFilter
+        selected={selectedExpenseFilter}
+        onFilterChange={handleFilterChange}
+      ></ExpenseFilter>
+      {props.expenses.map((expense) => {
+        console.log(expense);
+        return (
+          <ExpenseItem
+            key={expense.id}  //Very important. To tell React to make new elements
+            date={expense.date}
+            amount={expense.amount}
+            title={expense.title}
+          />
+        );
+      })}
+      ;
+    </Card>
+  );
 }
 
 export default Expenses;
