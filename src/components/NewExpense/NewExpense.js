@@ -1,21 +1,34 @@
-import React from 'react';
-import  './NewExpense.css'
-import ExpenseForm from './ExpenseForm';
+import React, { useState } from "react";
+import "./NewExpense.css";
+import ExpenseForm from "./ExpenseForm";
+import AddExpense from "./AddExpense";
 
-const NewExpense = props =>{
-
-const saveExpenseDataHandler = (enteredExpenseData) =>{
+const NewExpense = (props) => {
+  const [buttonClicked, setButtonClicked] = useState("");
+  const saveExpenseDataHandler = (enteredExpenseData) => {
     const expenseData = {
-        ...enteredExpenseData,
-        id: Math.random()
-    }
+      ...enteredExpenseData,
+      id: Math.random(),
+    };
     props.onAddExpense(expenseData);
-}
-return (
-<div className="new-expense">
-    <ExpenseForm onSaveExpenseData={saveExpenseDataHandler}></ExpenseForm>
-</div>
-);
-}
+  };
+
+  const callButtonClick = () => {
+    setButtonClicked("true");
+  };
+  const resetButtonClick = () => {
+    setButtonClicked("false");
+  };
+  let contents = <AddExpense handleButtonClicked={callButtonClick} />;
+  if (buttonClicked === "true") {
+    contents = (
+      <ExpenseForm
+        onSaveExpenseData={saveExpenseDataHandler}
+        handleButtonClicked={resetButtonClick}
+      ></ExpenseForm>
+    );
+  }
+  return <div className="new-expense">{contents}</div>;
+};
 
 export default NewExpense;
